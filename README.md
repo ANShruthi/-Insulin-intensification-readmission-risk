@@ -1,5 +1,3 @@
-# Insulin-intensification-readmission-risk
-Adjusted association study of inpatient insulin intensification and 30-day readmission risk in diabetic patients, using real-world claims-style data
 # Insulin Intensification and 30-Day Readmission Risk in Diabetic Inpatients
 
 ## What this project does
@@ -18,7 +16,10 @@ There's a real confound hiding in this question. If insulin gets intensified mos
 
 **Restricted to the 74,874 encounters where the patient was on diabetes medication: **
 
-Unadjusted 30-day readmission rate by insulin status:
+**Unadjusted 30-day readmission rate by insulin status: **
+
+! [Unadjusted readmission rate by insulin status](reports/figures/readmission_by_insulin_status.png)
+
 | Insulin status | Readmission rate | N |
 |---|---|---|
 | No insulin | 10.6% | 23,272 |
@@ -28,13 +29,15 @@ Unadjusted 30-day readmission rate by insulin status:
 
 **After adjusting for age, comorbidity burden, prior utilization, length of stay, and A1C severity: **
 
+![Adjusted odds ratios for insulin status vs. readmission](reports/figures/adjusted_odds_ratios.png)
+
 | Comparison (vs. Steady) | Adjusted Odds Ratio | 95% CI | p-value |
 |---|---|---|---|
 | Insulin increased ("Up") | **1.08** | 1.01 – 1.16 | 0.020 |
 | Insulin decreased ("Down") | **1.21** | 1.13 – 1.29 | <0.001 |
 | No insulin | 0.93 | 0.88 – 0.98 | 0.007 |
 
-**The finding that stands out: ** even after adjusting for how sick the patient was, both increasing *and* decreasing insulin during the stay were independently associated with higher 30-day readmission odds compared to patients whose insulin dose stayed steady   with the *decrease* group showing the strongest association (21% higher odds). That's a genuinely counterintuitive pattern worth digging into further: an insulin dose reduction during hospitalization might reflect a patient whose regimen is being pulled back for a reason (e.g., renal function decline, hypoglycemia risk, or discontinuation ahead of a difficult discharge) itself a marker of instability, not stabilization.
+**The finding that stands out: ** even after adjusting for how sick the patient was, both increasing *and* decreasing insulin during the stay were independently associated with higher 30-day readmission odds compared to patients whose insulin dose stayed steady   with the *decrease* group showing the strongest association (21% higher odds). That's a genuinely counterintuitive pattern worth digging into further: an insulin dose reduction during hospitalization might reflect a patient whose regimen is being pulled back for a reason (e.g., renal function decline, hypoglycemia risk, or discontinuation ahead of a difficult discharge)   itself a marker of instability, not stabilization.
 
 **Secondary check   length of stay: ** insulin changes (in either direction) was associated with meaningfully longer hospital stays (Up: +0.33 days, down: +0.13 days, both p<0.001) even after adjustment   consistent with insulin changes being a marker of a more complicated admission, not a routine one.
 
@@ -49,9 +52,10 @@ Insulin management is one of the most common, highest-stakes medication decision
 - **`reports/figures/`**   unadjusted readmission-rate bar chart and adjusted odds-ratio forest plot
 
 
+
 ## Tools used
 
-Python- pandas, numpy, statsmodels, matplotlib
+Python   pandas, numpy, statsmodels, matplotlib
 
 ## About me
 
