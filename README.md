@@ -63,6 +63,9 @@ Does insulin change also track with a longer, more complicated admission   i.e.,
 
 Insulin changes in either direction was associated with meaningfully longer hospital stays (Up: +0.33 days, down: +0.13 days, both p<0.001) even after adjustment   consistent with insulin changes being a marker of a more complicated admission, not a routine one.
 
+   ![Unadjusted readmission rate by insulin status](reports/figures/readmission_by_insulin_status.png)
+   ![Adjusted odds ratios for insulin status vs. readmission](reports/figures/adjusted_odds_ratios.png)
+
 ## Why these matters for a pharmacy/health economics audience
 
 Insulin management is one of the most common, highest-stakes medication decisions in inpatient diabetes care, and it's exactly the kind of utilization pattern payers and health systems track for both clinical quality and cost purposes. This kind of adjusted-association analysis   not just "can we predict this," but "does this specific, modifiable clinical decision track with the outcome once you control for severity"   is closer to how real pharmacoepidemiology and RWE studies are built and is directly relevant to value-based diabetes care programs trying to figure out which inpatient practices are worth targeting.
