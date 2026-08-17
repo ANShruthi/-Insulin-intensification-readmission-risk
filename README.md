@@ -14,11 +14,11 @@ There's a real confound hiding in this question. If insulin gets intensified mos
 
 ## What I found
 
-**Restricted to the 74,874 encounters where the patient was on diabetes medication: **
+Restricted to the 74,874 encounters where the patient was actually on diabetes medication.
 
-**Unadjusted 30-day readmission rate by insulin status: **
+### Unadjusted 30-day readmission rate by insulin status
 
-! [Unadjusted readmission rate by insulin status](reports/figures/readmission_by_insulin_status.png)
+! [Unadjusted readmission rate by insulin status] (reports/figures/readmission_by_insulin_status.png)
 
 | Insulin status | Readmission rate | N |
 |---|---|---|
@@ -27,19 +27,41 @@ There's a real confound hiding in this question. If insulin gets intensified mos
 | Steady (no change) | 11.4% | 29,132 |
 | Up (increased/started) | 13.5% | 10,733 |
 
-**After adjusting for age, comorbidity burden, prior utilization, length of stay, and A1C severity: **
+### Adjusted logistic regression   30-day readmission
 
-![Adjusted odds ratios for insulin status vs. readmission](reports/figures/adjusted_odds_ratios.png)
+Outcome: 30-day readmission. All covariates included in one model; reference category for insulin status is "Steady."
 
-| Comparison (vs. Steady) | Adjusted Odds Ratio | 95% CI | p-value |
+! [Adjusted odds ratios for insulin status vs. readmission](reports/figures/adjusted_odds_ratios.png)
+
+| Covariate | Odds Ratio | 95% CI | p-value |
 |---|---|---|---|
-| Insulin increased ("Up") | **1.08** | 1.01 – 1.16 | 0.020 |
-| Insulin decreased ("Down") | **1.21** | 1.13 – 1.29 | <0.001 |
-| No insulin | 0.93 | 0.88 – 0.98 | 0.007 |
+| Insulin: Up (vs. Steady) | 1.084 | 1.013 – 1.161 | 0.020 |
+| Insulin: Down (vs. Steady) | 1.207 | 1.131 – 1.287 | <0.001 |
+| Insulin: No (vs. Steady) | 0.926 | 0.876 – 0.980 | 0.007 |
+| Age (per year) | 1.005 | 1.003 – 1.006 | <0.001 |
+| Number of diagnoses (per diagnosis) | 1.038 | 1.025 – 1.052 | <0.001 |
+| Prior utilization (per prior visit) | 1.119 | 1.110 – 1.128 | <0.001 |
+| Time in hospital (per day) | 1.027 | 1.019 – 1.036 | <0.001 |
+| Number of medications (per medication) | 1.003 | 1.000 – 1.006 | 0.098 (n.s.) |
+| A1C high (>7 or >8 vs. not tested/normal) | 0.855 | 0.797 – 0.917 | <0.001 |
 
-**The finding that stands out: ** even after adjusting for how sick the patient was, both increasing *and* decreasing insulin during the stay were independently associated with higher 30-day readmission odds compared to patients whose insulin dose stayed steady   with the *decrease* group showing the strongest association (21% higher odds). That's a genuinely counterintuitive pattern worth digging into further: an insulin dose reduction during hospitalization might reflect a patient whose regimen is being pulled back for a reason (e.g., renal function decline, hypoglycemia risk, or discontinuation ahead of a difficult discharge)   itself a marker of instability, not stabilization.
+**The finding that stands out: ** even after adjusting for how sick the patient was, both increasing *and* decreasing insulin during the stay were independently associated with higher 30-day readmission odds compared to patients whose insulin dose stayed steady   with the *decrease* group showing the strongest association (21% higher odds). That's a genuinely counterintuitive pattern worth digging into further: an insulin dose reduction during hospitalization might reflect a patient whose regimen is being pulled back for a reason (e.g., renal function decline, hypoglycemia risk, or discontinuation ahead of a difficult discharge) itself a marker of instability, not stabilization.
 
-**Secondary check   length of stay: ** insulin changes (in either direction) was associated with meaningfully longer hospital stays (Up: +0.33 days, down: +0.13 days, both p<0.001) even after adjustment   consistent with insulin changes being a marker of a more complicated admission, not a routine one.
+### Secondary outcome: length of stay
+
+Does insulin change also track with a longer, more complicated admission   i.e., is it a marker of a harder stay, not a "fix"? Outcome: length of stay in days (OLS regression, same covariates minus A1C).
+
+| Covariate | Coefficient (days) | 95% CI | p-value |
+|---|---|---|---|
+| Insulin: Up (vs. Steady) | +0.332 | 0.273 – 0.391 | <0.001 |
+| Insulin: Down (vs. Steady) | +0.130 | 0.073 – 0.187 | <0.001 |
+| Insulin: No (vs. Steady) | −0.091 | −0.137 – −0.046 | <0.001 |
+| Age (per year) | +0.013 | 0.011 – 0.014 | <0.001 |
+| Number of diagnoses (per diagnosis) | +0.130 | 0.119 – 0.140 | <0.001 |
+| Prior utilization (per prior visit) | −0.015 | −0.023 – −0.007 | <0.001 |
+| Number of medications (per medication) | +0.157 | 0.154 – 0.159 | <0.001 |
+
+Insulin changes in either direction was associated with meaningfully longer hospital stays (Up: +0.33 days, down: +0.13 days, both p<0.001) even after adjustment   consistent with insulin changes being a marker of a more complicated admission, not a routine one.
 
 ## Why these matters for a pharmacy/health economics audience
 
@@ -48,9 +70,9 @@ Insulin management is one of the most common, highest-stakes medication decision
 ## What's in this repo
 
 - **`code/medication_intensification_analysis.py`**   the full analysis: cohort construction, unadjusted rates, adjusted logistic regression (readmission) and OLS regression (length of stay), and both figures
-- **`reports/`**   odds ratio table and length-of-stay coefficient table, both as CSV
-- **`reports/figures/`**   unadjusted readmission-rate bar chart and adjusted odds-ratio forest plot
-
+- **`reports/odds_ratios.csv`**   the full readmission model output (odds ratios, CIs, p-values), machine-readable
+- **`reports/los_model.csv`**   the full length-of-stay model output, machine-readable
+- **`reports/figures/`**   the two figures embedded above
 
 
 ## Tools used
@@ -59,7 +81,7 @@ Python   pandas, numpy, statsmodels, matplotlib
 
 ## About me
 
-Shruthi Nagaraju, MD, MHA (DHA Candidate
+Shruthi Nagaraju, MD, MHA (DHA Candidate)
 
 ## Limitations
 
